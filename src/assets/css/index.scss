@@ -1,0 +1,129 @@
+@import "./mixins.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: 0.3s all ease;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  padding: 50px;
+  display: flex;
+  background: linear-gradient(90deg, #eca832 0%, #e5a4dc 80%);
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  position: relative;
+  border-radius: 50px;
+  max-width: 1200px;
+  color: #fff;
+  width: 100%;
+  background-color: #18191b;
+  display: flex;
+  justify-content: flex-end;
+  padding: 100px 50px;
+
+  @media (max-width: 767px) {
+    padding: 400px 50px 70px;
+  }
+  @media (max-width: 570px) {
+    padding: 180px 50px 70px;
+  }
+}
+
+.card-info {
+  width: 50%;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.wrapper-img {
+  width: 45%;
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  height: calc(100% - 100px);
+  border-radius: 50px;
+  overflow: hidden;
+  transform: translate(0, -50%);
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 -100px;
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100% - 100px);
+    left: 50px;
+    transform: translate(0px, -80px);
+    top: 0;
+    height: 440px;
+  }
+  @media (max-width: 570px) {
+    width: 300px;
+    aspect-ratio: 1 / 1;
+    height: max-content;
+    border-radius: 50%;
+    border: 15px solid #18191b;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+}
+
+.name {
+  @include font(30px, 30px, 700);
+  margin-bottom: 20px;
+}
+
+.profession {
+  @include font(20px, 20px, 500);
+  margin-bottom: 20px;
+}
+
+.description {
+  @include font(16px, 20px, 400);
+  color: rgb(200, 199, 199);
+  margin-bottom: 30px;
+}
+
+.socials-list {
+  display: flex;
+  gap: 10px;
+
+
+  @media (max-width: 767px) {
+    justify-content: center;
+  }
+
+
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #292a2e;
+  border-radius: 50%;
+
+  &.active {
+    outline: 1px solid #eca832;
+    outline-offset: 3px;
+  }
+}
