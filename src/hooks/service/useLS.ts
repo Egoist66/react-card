@@ -8,14 +8,14 @@ export const useLS = () => {
     const ls = window.localStorage;
   
     const set = async <T = any>(key: string, value: T | undefined) => {
-      return new Promise((res, rej) => {
+      return new Promise((res) => {
         ls.setItem(key, JSON.stringify(value));
         res(value);
       });
     };
   
     const append = async <T = any>(data: T[], value: any) => {
-      return new Promise((res, rej) => {
+      return new Promise((res) => {
         
           if (Array.isArray(data)) {
             data.push(value);

@@ -1,10 +1,15 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import { useStatuses } from './useStatuses';
 
+
 export const useUpload = () => {
     const inputRef = useRef<HTMLInputElement>(null);
+
+    //@ts-ignore
+
     const [uploadData, setUploadData] = useState<File | null>(null);
 
+    //@ts-ignore
     const { statuses, setError, resetStatuses, setRestoring, setLoading, setSuccess } = useStatuses();
 
    const upload = (e: ChangeEvent<HTMLInputElement>) => {
