@@ -1,3 +1,16 @@
+/// Sets font properties.
+///
+/// @author Natali Yarosh
+/// @version 1.0
+///
+/// @param {Number} $font-size - The font size.
+/// @param {Number} $line-height - The line height.
+/// @param {Number} $font-weight - The font weight.
+///
+/// @example scss - Using the mixin
+/// .my-element {
+///   @include font(16px, 24px, 500);
+/// }
 @mixin font($font-size, $line-height, $font-weight) {
     font-size: $font-size;
     line-height: $line-height;
