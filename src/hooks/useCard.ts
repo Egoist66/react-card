@@ -101,6 +101,7 @@ export const useCard = () => {
                 url: file.result as string,
                 urlValue: file.result as string,
             });
+            e.target.value = "";
         };
 
         file.onerror = () => {
