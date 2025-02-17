@@ -48,7 +48,7 @@ export const useCard = () => {
     SocialLinks.twitter
   );
 
-  const inputFileRef = useRef<HTMLInputElement>(null)
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const [avatarData, setAvatar] = useState<AvatarState>({
     url: getSync<AvatarState>("avatar")?.url || "",
@@ -65,22 +65,16 @@ export const useCard = () => {
     setCurrentLink(name);
   }, []);
 
-
-
-
-  const uploadAvatarWithLink = useCallback(
-    (url: string) => {
-      setAvatar({
-        ...avatarData,
-        urlValue: url,
-      });
-    },
-    [avatarData.urlValue]
-  );
+  const uploadAvatarWithLink = (url: string) => {
+    setAvatar({
+      ...avatarData,
+      urlValue: url,
+    });
+  };
 
   const setAvatarUrlWithBlur = () => {
     if (!avatarData.urlValue?.match(/\.(jpeg|jpg|gif|png)$/i)) {
-        return
+      return;
     }
     setAvatar({
       ...avatarData,
@@ -88,36 +82,31 @@ export const useCard = () => {
     });
   };
 
-
-
   const uploadAvatarWithFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if(e.target.files?.length){
-        const fileRaw = e.target.files[0];
-        const file = new FileReader();
-        file.readAsDataURL(fileRaw);
-        file.onload = () => {
-            setAvatar({
-                ...avatarData,
-                url: file.result as string,
-                urlValue: file.result as string,
-            });
-            e.target.value = "";
-        };
+    if (e.target.files?.length) {
+      const fileRaw = e.target.files[0];
+      const file = new FileReader();
+      file.readAsDataURL(fileRaw);
+      file.onload = () => {
+        setAvatar({
+          ...avatarData,
+          url: file.result as string,
+          urlValue: file.result as string,
+        });
+        e.target.value = "";
+      };
 
-        file.onerror = () => {
-            setAvatar({
-                ...avatarData,
-                file: null,
-                urlValue: "",
-            });
-        };
-        
-        console.log(file);
+      file.onerror = () => {
+        setAvatar({
+          ...avatarData,
+          file: null,
+          urlValue: "",
+        });
+      };
+
+      console.log(file);
     }
-  }
-  
-  
- 
+  };
 
   useEffect(() => {
     saveAvatarToLSDebounced();
@@ -132,11 +121,9 @@ export const useCard = () => {
         urlValue: "",
         file: null,
       });
-
-    
     }
 
-    return () => {}
+    return () => {};
   }, [avatarData.urlValue]);
   const { url, file, urlValue } = avatarData;
 
