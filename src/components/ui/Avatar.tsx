@@ -6,6 +6,7 @@ export const Avatar: FC<{ url?: string }> = memo(({ url }) => {
     url: urlAvatar,
     urlValue,
     inputFileRef,
+    file,
     setAvatarUrlWithBlur,
     uploadAvatarWithFile,
     uploadAvatarWithLink,
@@ -32,25 +33,22 @@ export const Avatar: FC<{ url?: string }> = memo(({ url }) => {
           >
             Upload
           </button>
-          <input
-            value={urlValue}
-            onChange={(e) => uploadAvatarWithLink(e.target.value)}
-            onBlur={setAvatarUrlWithBlur}
-            placeholder="Enter avatar url"
-            className="avatar-url"
-            type="url"
-            name="url"
-          />
+          {file ? (
+            <input
+              value={urlValue}
+              onChange={(e) => uploadAvatarWithLink(e.target.value)}
+              onBlur={setAvatarUrlWithBlur}
+              placeholder="Enter avatar url"
+              className="avatar-url"
+              type="url"
+              name="url"
+            />
+          ) : null}
         </form>
       </div>
 
       {(urlAvatar || url) && (
-        <img
-         
-          className="img"
-          src={urlAvatar || url}
-          alt=""
-        />
+        <img className="img" src={urlAvatar || url} alt="" />
       )}
     </div>
   );

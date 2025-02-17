@@ -86,7 +86,6 @@ export const useCard = () => {
     if (e.target.files?.length) {
       const fileRaw = e.target.files[0];
       const file = new FileReader();
-      file.readAsDataURL(fileRaw);
       file.onload = () => {
         setAvatar({
           ...avatarData,
@@ -96,6 +95,9 @@ export const useCard = () => {
         });
         e.target.value = "";
       };
+
+      file.readAsDataURL(fileRaw);
+
 
       file.onerror = () => {
         setAvatar({
