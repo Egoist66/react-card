@@ -111,6 +111,15 @@ export const useCard = () => {
     }
   };
 
+  const clearAvatar = () => {
+    setAvatar({
+      ...avatarData,
+      url: "",
+      urlValue: "",
+      file: null,
+    });
+  }
+
   useEffect(() => {
     saveAvatarToLSDebounced();
 
@@ -138,6 +147,7 @@ export const useCard = () => {
     activateLink,
     setAvatarUrlWithBlur,
     uploadAvatarWithFile,
+    clearAvatar,
     url,
     file,
     uploadAvatarWithLink,

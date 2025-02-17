@@ -169,6 +169,13 @@ body {
     border-radius: 5px;
   }
 }
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
 input {
   outline: none;
