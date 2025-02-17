@@ -46,7 +46,7 @@ export const Avatar: FC<{ url?: string }> = memo(({ url }) => {
 
       {(urlAvatar || url) && (
         <img
-          style={{ objectPosition: url ? 'center' : '' }}
+         
           className="img"
           src={urlAvatar || url}
           alt=""
