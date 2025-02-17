@@ -90,6 +90,7 @@ export const useCard = () => {
       file.onload = () => {
         setAvatar({
           ...avatarData,
+          file: fileRaw,
           url: file.result as string,
           urlValue: file.result as string,
         });
