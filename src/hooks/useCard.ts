@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useLS } from "./service/useLS";
 import { debounce } from "../utils/debounce";
 
 export enum SocialLinks {
-    twitter = "twitter",
-    facebook = "facebook",
-    linkedIN = "linkedIN",
+  twitter = "twitter",
+  facebook = "facebook",
+  linkedIN = "linkedIN",
 }
 export type ListItemsProps = {
-    imgpath: string;
-    name: SocialLinks;
-    linksClassNames?: string;
-    id: string;
+  imgpath: string;
+  name: SocialLinks;
+  linksClassNames?: string;
+  id: string;
 };
 
 const listsOfIcons: ListItemsProps[] = [
@@ -34,63 +34,113 @@ const listsOfIcons: ListItemsProps[] = [
     linksClassNames: "social-link",
   },
 ];
-  
 
 type AvatarState = {
-    url?: string
-    file?: File | null
-}
-
+  url?: string;
+  file?: File | null;
+  urlValue?: string;
+};
 
 export const useCard = () => {
+  const { set, getSync } = useLS();
 
-    const {set, getSync} = useLS()
+  const [currentLink, setCurrentLink] = useState<SocialLinks>(
+    SocialLinks.twitter
+  );
+
+  const inputFileRef = useRef<HTMLInputElement>(null)
+
+  const [avatarData, setAvatar] = useState<AvatarState>({
+    url: getSync<AvatarState>("avatar")?.url || "",
+    urlValue: getSync<AvatarState>("avatar")?.urlValue || "",
+    file: null,
+  });
+
+  const saveAvatarToLSDebounced = debounce(
+    () => set<AvatarState>("avatar", avatarData),
+    500
+  );
+
+  const activateLink = useCallback((name: SocialLinks) => {
+    setCurrentLink(name);
+  }, []);
 
 
-    const [currentLink, setCurrentLink] = useState<SocialLinks>(
-        SocialLinks.twitter
-    );
-
-    const [avatarData, setAvatar] = useState<AvatarState>({
-        url: getSync<AvatarState>('avatar')?.url,
-        file: null
-    })
-    
-    const activateLink = useCallback((name: SocialLinks) => {
-        setCurrentLink(name);
-    }, []);
-
-    const uploadAvatarWithLink = useCallback((url: string) => {
-        setAvatar({
-            ...avatarData,
-            url
-        })
-    }, [avatarData.url])
 
 
-    
-    const saveAvatarToLSDebounced = debounce(
-        () => set<AvatarState>('avatar', avatarData),
-        1000
-    );
+  const uploadAvatarWithLink = useCallback(
+    (url: string) => {
+      setAvatar({
+        ...avatarData,
+        urlValue: url,
+      });
+    },
+    [avatarData.urlValue]
+  );
 
-    useEffect(() => {
-        saveAvatarToLSDebounced();
+  const setAvatarUrlWithBlur = () => {
+    setAvatar({
+      ...avatarData,
+      url: avatarData.urlValue,
+    });
+  };
 
-        return () => {
+
+
+  const uploadAvatarWithFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if(e.target.files?.length){
+        const fileRaw = e.target.files[0];
+        const file = new FileReader();
+        file.readAsDataURL(fileRaw);
+        file.onload = () => {
+            setAvatar({
+                ...avatarData,
+                url: file.result as string,
+                urlValue: file.result as string,
+            });
         };
-    }, [avatarData.url]);
 
-
-    const {url, file} = avatarData
-
-    return {
-        currentLink,
-        listsOfIcons,
-        activateLink,
-        url,
-        file,
-        uploadAvatarWithLink
+        file.onerror = () => {
+            setAvatar({
+                ...avatarData,
+                file: null,
+                urlValue: "",
+            });
+        };
+        
+        console.log(file);
     }
+  }
+  
+  
+ 
 
-}
+  useEffect(() => {
+    saveAvatarToLSDebounced();
+
+    return () => {};
+  }, [avatarData]);
+
+  useEffect(() => {
+    if (!avatarData.urlValue?.length) {
+      setAvatar({
+        ...avatarData,
+        url: "",
+      });
+    }
+  }, [avatarData.urlValue]);
+  const { url, file, urlValue } = avatarData;
+
+  return {
+    currentLink,
+    listsOfIcons,
+    urlValue,
+    inputFileRef,
+    activateLink,
+    setAvatarUrlWithBlur,
+    uploadAvatarWithFile,
+    url,
+    file,
+    uploadAvatarWithLink,
+  };
+};
