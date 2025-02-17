@@ -79,6 +79,9 @@ export const useCard = () => {
   );
 
   const setAvatarUrlWithBlur = () => {
+    if (!avatarData.urlValue?.match(/\.(jpeg|jpg|gif|png)$/i)) {
+        return
+    }
     setAvatar({
       ...avatarData,
       url: avatarData.urlValue,
@@ -124,10 +127,15 @@ export const useCard = () => {
   useEffect(() => {
     if (!avatarData.urlValue?.length) {
       setAvatar({
-        ...avatarData,
         url: "",
+        urlValue: "",
+        file: null,
       });
+
+    
     }
+
+    return () => {}
   }, [avatarData.urlValue]);
   const { url, file, urlValue } = avatarData;
 
