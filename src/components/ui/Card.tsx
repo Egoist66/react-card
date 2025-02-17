@@ -5,25 +5,20 @@ import { CardInfo } from "./CardInfo";
 import { Author } from "./Author";
 import { Socials } from "./Socials";
 
-
-
 export const Card: FC = () => {
+  const { activateLink, currentLink, listsOfIcons } = useCard();
 
-
-  const {activateLink,  currentLink, listsOfIcons} = useCard()
- 
   return (
     <div className="card">
-      
       <Avatar url="https://static.vecteezy.com/system/resources/previews/003/337/584/large_2x/default-avatar-photo-placeholder-profile-icon-vector.jpg" />
 
       <CardInfo>
         <Author />
 
-        <Socials 
-         activateLink={activateLink}
-         currentLink={currentLink}
-         listsOfIcons={listsOfIcons}
+        <Socials
+          activateLink={activateLink}
+          currentLink={currentLink}
+          listsOfIcons={listsOfIcons}
         />
       </CardInfo>
     </div>
