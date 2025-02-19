@@ -33,19 +33,23 @@ export const Avatar: FC<{ url?: string }> = memo(({ url }) => {
           >
             Upload
           </button>
-          
-            <input
-              value={urlValue}
-              onChange={(e) => uploadAvatarWithLink(e.target.value)}
-              onBlur={setAvatarUrlWithBlur}
-              placeholder="Enter avatar url"
-              className="avatar-url"
-              type="url"
-              name="url"
-            />
 
-          <button disabled={!urlAvatar?.length || !url?.length}  onClick={clearAvatar}>Clear avatar</button>
-          
+          <input
+            value={urlValue}
+            onChange={(e) => uploadAvatarWithLink(e.target.value)}
+            onBlur={setAvatarUrlWithBlur}
+            placeholder="Enter avatar url"
+            className="avatar-url"
+            type="url"
+            name="url"
+          />
+
+          <button
+            disabled={!urlAvatar?.length || !url?.length}
+            onClick={clearAvatar}
+          >
+            Clear avatar
+          </button>
         </form>
       </div>
 

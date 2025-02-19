@@ -3,7 +3,7 @@ import { Card } from "../components/ui/Card";
 
 export const Home: FC = () => {
     return (
-        <section>
+        <section className="home">
         
 
 
