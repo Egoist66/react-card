@@ -154,7 +154,7 @@ export const useCard = () => {
     e.preventDefault();
 
 
-    const newValue = window.prompt("Enter a link to your social media profile", "");
+    const newValue = window.prompt("Enter a link to your social media profile", listsOfIcons.find((item) => item.id === id)?.to || '');
     if(newValue && newValue.length) {
       setListsOfIcons((newListOfIcons) => newListOfIcons.map((item) =>item.id === id ? { ...item, to: newValue } : item));
 
