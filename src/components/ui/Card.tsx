@@ -6,7 +6,7 @@ import { Author } from "./Author";
 import { Socials } from "./Socials";
 
 export const Card: FC = () => {
-  const { activateLink, currentLink, listsOfIcons } = useCard();
+  const { activateLink, setHrefToSocials, currentLink, listsOfIcons } = useCard();
 
   return (
     <div className="card">
@@ -17,6 +17,7 @@ export const Card: FC = () => {
 
         <Socials
           activateLink={activateLink}
+          setHrefToSocials={setHrefToSocials}
           currentLink={currentLink}
           listsOfIcons={listsOfIcons}
         />

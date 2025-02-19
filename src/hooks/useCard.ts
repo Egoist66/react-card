@@ -10,30 +10,12 @@ export enum SocialLinks {
 export type ListItemsProps = {
   imgpath: string;
   name: SocialLinks;
+  to:string;
   linksClassNames?: string;
   id: string;
 };
 
-const listsOfIcons: ListItemsProps[] = [
-  {
-    name: SocialLinks.twitter,
-    imgpath: "/Vector-1.svg",
-    id: "1",
-    linksClassNames: "social-link",
-  },
-  {
-    name: SocialLinks.facebook,
-    imgpath: "/Vector.svg",
-    id: "2",
-    linksClassNames: "social-link",
-  },
-  {
-    name: SocialLinks.linkedIN,
-    imgpath: "/Vector-2.svg",
-    id: "3",
-    linksClassNames: "social-link",
-  },
-];
+
 
 type AvatarState = {
   url?: string;
@@ -43,6 +25,33 @@ type AvatarState = {
 
 export const useCard = () => {
   const { set, getSync } = useLS();
+
+
+  const defaultData = [
+    {
+      name: SocialLinks.twitter,
+      imgpath: "/Vector-1.svg",
+      to: '',
+      id: "1",
+      linksClassNames: "social-link",
+    },
+    {
+      name: SocialLinks.facebook,
+      to: '',
+      imgpath: "/Vector.svg",
+      id: "2",
+      linksClassNames: "social-link",
+    },
+    {
+      name: SocialLinks.linkedIN,
+      to: '',
+      imgpath: "/Vector-2.svg",
+      id: "3",
+      linksClassNames: "social-link",
+    },
+  ] as ListItemsProps[];
+
+  const [listsOfIcons, setListsOfIcons] = useState<ListItemsProps[]>(getSync<ListItemsProps[]>("socials") || defaultData);
 
   const [currentLink, setCurrentLink] = useState<SocialLinks>(
     SocialLinks.twitter
@@ -139,6 +148,26 @@ export const useCard = () => {
   }, [avatarData.urlValue]);
   const { url, file, urlValue } = avatarData;
 
+
+
+  const setHrefToSocials = useCallback((e: React.MouseEvent<HTMLLIElement, MouseEvent>, id: string) => {
+    e.preventDefault();
+
+
+    const newValue = window.prompt("Enter a link to your social media profile", "");
+    if(newValue && newValue.length) {
+      setListsOfIcons((newListOfIcons) => newListOfIcons.map((item) =>item.id === id ? { ...item, to: newValue } : item));
+
+    }
+    
+    
+  },[setListsOfIcons])
+
+
+  useEffect(() => {
+    set<ListItemsProps[]>("socials", listsOfIcons)
+  }, [listsOfIcons])
+
   return {
     currentLink,
     listsOfIcons,
@@ -147,6 +176,7 @@ export const useCard = () => {
     activateLink,
     setAvatarUrlWithBlur,
     uploadAvatarWithFile,
+    setHrefToSocials,
     clearAvatar,
     url,
     file,
